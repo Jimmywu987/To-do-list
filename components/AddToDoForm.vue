@@ -2,8 +2,18 @@
     <form @submit.prevent="addTodo" class="space-y-2 flex flex-col">
         <div class="flex items-end justify-end">
 
-            <div class="flex items-end space-x-3">
+            <div class="flex flex-col md:flex-row-reverse items-end ">
 
+
+
+
+                <label class="space-y-1 mb-2 md:mb-0 ml-0 md:ml-2">
+                    <p>
+                        When should it be done?:
+                    </p>
+                    <input name="deadline" type="datetime-local" :value="this.now" :min="this.now"
+                        class="outline-none p-2 bg-light-color border rounded text-dark-color" @change="dateTimeOnChange" />
+                </label>
                 <div class="border border-gray-500 rounded p-1">
                     <input type="number"
                         class="border-gray-500 py-0.5 rounded text-dark-color outline-none border w-10 px-2"
@@ -21,16 +31,6 @@
                         Add time
                     </button>
                 </div>
-
-
-                <label class="space-y-1">
-                    <p>
-                        When should it be done?:
-                    </p>
-                    <input name="deadline" type="datetime-local" :value="this.now" :min="this.now"
-                        class="outline-none p-2 bg-light-color border rounded text-dark-color" @change="dateTimeOnChange" />
-                </label>
-
             </div>
         </div>
 

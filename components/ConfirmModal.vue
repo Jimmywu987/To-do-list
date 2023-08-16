@@ -1,6 +1,6 @@
 <template>
     <div class="fixed top-0 bottom-0 left-0 right-0 flex justify-center bg-[#000000da]" @click="onClose">
-        <div class="flex flex-col bg-light-color dark:bg-gray-800 h-[300px] w-full sm:w-[500px] mt-[10%] rounded-2xl"
+        <div class="flex flex-col bg-light-color dark:bg-gray-800 h-[300px] w-full sm:w-[500px] mt-[10%] rounded-2xl mx-6"
             @click.stop>
             <font-awesome-icon icon="fa-solid fa-xmark" class="text-gray-600 text-3xl m-3 self-end cursor-pointer"
                 @click="onClose" />

@@ -1,5 +1,5 @@
 <template>
     <footer class="text-center">
-        This is footer
+        Code test
     </footer>
 </template>

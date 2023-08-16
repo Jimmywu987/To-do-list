@@ -1,6 +1,6 @@
 <template>
     <button @click="onSelect(option)"
-        :class="`${selectedStatus === option ? 'bg-gray-600' : 'bg-gray-400'} px-3 py-1 text-light-color rounded-2xl`">
+        :class="`${selectedStatus === option ? 'bg-gray-600 dark:bg-gray-200' : 'bg-gray-400'} px-3 py-1 text-light-color dark:text-dark-color rounded-2xl`">
         {{ option }}
     </button>
 </template>
