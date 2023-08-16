@@ -33,7 +33,8 @@
 
 
         <div class="text-sm ml-9 flex justify-between">
-            <span v-if="!isEdit">{{ $dateFns.format(todo.deadline, "Pp") }}</span>
+
+            <span v-if="!isEdit">Complete it by: {{ $dateFns.format(todo.deadline, "Pp") }}</span>
             <div v-else
                 class="flex flex-col md:flex-row items-start md:items-center justify-center md:justify-start md:space-x-2 space-y-1">
                 <input name="deadline" type="datetime-local" :value="this.deadline" :min="this.now"
