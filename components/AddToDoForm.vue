@@ -40,7 +40,7 @@
             </button>
         </label>
 
-        <p class="text-sm text-rose-500 ">
+        <p class="text-sm text-rose-500 " v-if="!!this.error">
             {{ this.error }}
         </p>
 
@@ -61,7 +61,7 @@ export default {
             const text = form.doToItem.value
             const deadlineDateTime = form.deadline.value
             if (text === "") {
-                this.error = "Please input a do to task"
+                this.error = "Please input a do to task."
                 return
             }
 
