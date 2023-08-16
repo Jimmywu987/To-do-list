@@ -16,7 +16,7 @@
                 </div>
 
 
-                <div v-if="!isEdit" class="space-x-2 text-base md:text-xl w-2/12 lg:w-1/12  flex justify-center">
+                <div v-if="!isEdit" class="space-x-1 text-base md:text-xl w-2/12 lg:w-1/12  flex justify-end">
                     <font-awesome-icon icon="fa-solid fa-pen-to-square" class="cursor-pointer hover:opacity-50"
                         @click="isEdit = true" v-if="isPending && !todo.done" />
                     <font-awesome-icon icon="fa-solid fa-copy" class="cursor-pointer hover:opacity-50"
@@ -29,9 +29,10 @@
 
         <div class="text-sm ml-9 flex justify-between">
             <span v-if="!isEdit">{{ $dateFns.format(todo.deadline, "Pp") }}</span>
-            <div v-else class="flex items-center space-x-2">
+            <div v-else
+                class="flex flex-col md:flex-row items-start md:items-center justify-center md:justify-start md:space-x-2 space-y-1">
                 <input name="deadline" type="datetime-local" :value="this.deadline" :min="this.now"
-                    class="outline-none border border-gray-500 p-1 rounded-xl" @change="dateTimeOnChange" />
+                    class="outline-none border border-gray-500 p-1 rounded-xl text-dark-color" @change="dateTimeOnChange" />
                 <div class="border border-gray-500 rounded-xl p-1">
                     <input type="number" class="border-gray-500  rounded text-dark-color outline-none border w-10 px-2"
                         v-model="duration" />
