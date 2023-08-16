@@ -8,14 +8,18 @@
             <div v-else class="ml-6"></div>
 
             <div class="flex flex-1 justify-between space-x-2">
-                <div
-                    :class="`text-xl w-10/12 lg:w-11/12 rounded bg-gray-100 flex-1 px-3 py-1 border-l-4 text-dark-color ${todo.done ? 'border-l-emerald-600' : this.isPending ? 'border-l-gray-400' : 'border-l-rose-600'}`">
-                    <input type="text" v-model="text" v-if="isEdit" name="editValue"
-                        class=" outline-gray-700 px-2 bg-gray-100  w-full" @keypress.enter.prevent="edit">
-                    <span class="" v-else>{{ todo.text }}</span>
+                <div class="flex flex-col flex-1 space-y-1 w-10/12 lg:w-11/12">
+                    <div
+                        :class="`text-xl rounded bg-gray-100 flex-1 px-3 py-1 border-l-4 text-dark-color ${todo.done ? 'border-l-emerald-600' : this.isPending ? 'border-l-gray-400' : 'border-l-rose-600'}`">
+                        <input type="text" v-model="text" v-if="isEdit" name="editValue"
+                            class=" outline-gray-700 px-2 bg-gray-100  w-full" @keypress.enter.prevent="edit">
+                        <span class="" v-else>{{ todo.text }}</span>
+
+                    </div>
+                    <p class="text-sm text-rose-500 " v-if="!!this.error">
+                        {{ this.error }}
+                    </p>
                 </div>
-
-
                 <div v-if="!isEdit" class="space-x-1 md:space-x-2 text-base md:text-xl w-2/12 lg:w-1/12  flex justify-end">
                     <font-awesome-icon icon="fa-solid fa-pen-to-square" class="cursor-pointer hover:opacity-50"
                         @click="isEdit = true" v-if="isPending && !todo.done" />
@@ -24,6 +28,7 @@
                     <font-awesome-icon icon="fa-solid fa-trash" class="cursor-pointer hover:opacity-50" @click="onOpen" />
                 </div>
             </div>
+
         </div>
 
 
@@ -80,8 +85,8 @@ import { add } from "date-fns"
 export default {
     props: ["todo"],
     data() {
-
         return {
+            error: "",
             isEdit: false,
             now: null,
             deadline: this.todo.deadline,
@@ -104,7 +109,14 @@ export default {
         edit(event) {
             const form = event.keyCode === 13 ? event.target.form : event.target
             const { editValue, deadline } = form
+            if (editValue.value === "") {
+                this.error = "Please input a do to task."
+                return
+            }
 
+            if (!!this.error) {
+                this.error = ""
+            }
             this.$store.commit("todos/edit", { ...this.todo, text: editValue.value, deadline: deadline.value })
             this.isEdit = false
         },
