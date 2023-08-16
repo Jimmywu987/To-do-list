@@ -1,29 +1,16 @@
 <template>
-    <div class="flex space-x-2">
-        <button @click="onSelect('ALL')">
-            All
-        </button>
-        <button @click="onSelect('PENDING')">
-            Pending
-        </button>
-        <button @click="onSelect('UNFINISHED')">
-            Unfinished
-        </button>
-        <button @click="onSelect('COMPLETED')">
-            Completed
-        </button>
+    <div class="flex md:space-x-4 md:justify-center flex-wrap gap-2">
+        <StatusOptionButton :option="'ALL'" />
+        <StatusOptionButton :option="'PENDING'" />
+        <StatusOptionButton :option="'UNFINISHED'" />
+        <StatusOptionButton :option="'COMPLETED'" />
     </div>
 </template>
 <script>
-
+import StatusOptionButton from '~/components/StatusOptionButton.vue';
 
 export default {
-
-    methods: {
-        onSelect(status) {
-            this.$store.commit("todos/updateStatus", status)
-        },
-    }
+    components: { StatusOptionButton }
 }
 
 </script>
