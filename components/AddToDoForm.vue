@@ -1,12 +1,7 @@
 <template>
     <form @submit.prevent="addTodo" class="space-y-2 flex flex-col">
         <div class="flex items-end justify-end">
-
             <div class="flex flex-col md:flex-row-reverse items-end ">
-
-
-
-
                 <label class="space-y-1 mb-2 md:mb-0 ml-0 md:ml-2">
                     <p>
                         When should it be done?:
@@ -38,7 +33,7 @@
         <label class="flex space-x-2 w-full border-2  items-center pl-3 pr-1 rounded-3xl bg-light-color">
             <font-awesome-icon icon="fa-solid fa-pen" class="text-gray-200 " />
             <input name="doToItem" type="text" placeholder="What needs to be done?"
-                class="outline-none p-2 bg-light-color w-full text-dark-color" />
+                class="outline-none p-2 bg-light-color w-full text-dark-color" @keypress.enter.prevent="addTodo" />
             <button
                 class="px-4 py-1 bg-emerald-500 rounded-3xl text-white shadow-md hover:bg-emerald-600 font-semibold transition-colors duration-200">
                 Add
@@ -62,22 +57,23 @@ export default {
 
     methods: {
         addTodo(event) {
-            const { doToItem, deadline } = event.target
-            const text = doToItem.value
-            const deadlineDateTime = deadline.value
+            const form = event.keyCode === 13 ? event.target.form : event.target
+            const text = form.doToItem.value
+            const deadlineDateTime = form.deadline.value
             if (text === "") {
                 this.error = "Please input a do to task"
                 return
             }
 
             this.$store.commit('todos/add', { text, deadline: deadlineDateTime })
-            event.target.doToItem.value = ''
+            form.doToItem.value = ''
 
             if (!!this.error) {
                 this.error = ""
             }
         },
-        addTime() {
+        addTime(event) {
+            event.stopPropagation()
             this.now = dateTimeFormatter(add(new Date(this.now), { [this.durationUnit]: this.duration }))
 
         },

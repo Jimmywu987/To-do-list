@@ -10,7 +10,7 @@
                     <button @click="onClose"
                         class="bg-gray-600 w-36 h-10 text-white text-sm rounded-2xl mt-12">Cancel</button>
                     <button @click="onConfirm"
-                        class="bg-red-600 w-36 h-10 text-white text-sm rounded-2xl mt-12">Confirm</button>
+                        class="bg-red-600 w-36 h-10 text-white text-sm rounded-2xl mt-12">Delete</button>
                 </div>
             </div>
         </div>
@@ -24,8 +24,11 @@ export default {
     methods: {
         ...mapMutations({
             onClose: 'openModal/onClose',
-            onConfirm: 'openModal/onConfirm',
         }),
+        onConfirm() {
+            this.$store.commit("todos/remove")
+            this.$store.commit("openModal/onClose")
+        },
 
     }
 }

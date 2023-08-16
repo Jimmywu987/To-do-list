@@ -10,13 +10,13 @@
             <div class="flex flex-1 justify-between space-x-2">
                 <div
                     :class="`text-xl w-10/12 lg:w-11/12 rounded bg-gray-100 flex-1 px-3 py-1 border-l-4 text-dark-color ${todo.done ? 'border-l-emerald-600' : this.isPending ? 'border-l-gray-400' : 'border-l-rose-600'}`">
-                    <input type="text" :value="todo.text" v-if="isEdit" name="editValue"
-                        class=" outline-gray-700 px-2 bg-gray-100  w-full">
+                    <input type="text" v-model="text" v-if="isEdit" name="editValue"
+                        class=" outline-gray-700 px-2 bg-gray-100  w-full" @keypress.enter.prevent="edit">
                     <span class="" v-else>{{ todo.text }}</span>
                 </div>
 
 
-                <div v-if="!isEdit" class="space-x-1 text-base md:text-xl w-2/12 lg:w-1/12  flex justify-end">
+                <div v-if="!isEdit" class="space-x-1 md:space-x-2 text-base md:text-xl w-2/12 lg:w-1/12  flex justify-end">
                     <font-awesome-icon icon="fa-solid fa-pen-to-square" class="cursor-pointer hover:opacity-50"
                         @click="isEdit = true" v-if="isPending && !todo.done" />
                     <font-awesome-icon icon="fa-solid fa-copy" class="cursor-pointer hover:opacity-50"
@@ -80,6 +80,7 @@ import { add } from "date-fns"
 export default {
     props: ["todo"],
     data() {
+
         return {
             isEdit: false,
             now: null,
@@ -87,6 +88,7 @@ export default {
             isPending: new Date(this.todo.deadline) > new Date(),
             duration: 1,
             durationUnit: "days",
+            text: this.todo.text
         }
     },
     mounted() {
@@ -100,7 +102,8 @@ export default {
             toggle: "todos/toggle",
         }),
         edit(event) {
-            const { editValue, deadline } = event.target
+            const form = event.keyCode === 13 ? event.target.form : event.target
+            const { editValue, deadline } = form
 
             this.$store.commit("todos/edit", { ...this.todo, text: editValue.value, deadline: deadline.value })
             this.isEdit = false
@@ -110,13 +113,8 @@ export default {
         },
         onOpen() {
             this.$store.commit("todos/storeRemoveItemId", this.todo.id)
-            this.$store.commit("openModal/onOpen", {
-                onCancel: () => {
-                    this.$store.commit("todos/emptyRemoveItemId")
-                }, onConfirm: () => {
-                    this.$store.commit("todos/remove")
-                }
-            })
+            this.$store.commit("openModal/onOpen")
+
         },
         addTime() {
             this.deadline = dateTimeFormatter(add(new Date(this.deadline), { [this.durationUnit]: this.duration }))
